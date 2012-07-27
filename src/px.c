@@ -46,7 +46,8 @@ int main(int argc, char *const argv[])
         {
             { "username", required_argument, 0, 'u' },
             { "host", required_argument, 0, 'h' },
-            { "database", required_argument, 0, 'd' }
+            { "database", required_argument, 0, 'd' },
+            { NULL, 0, 0, 0 }
         };
         
         int optionIndex = 0;
