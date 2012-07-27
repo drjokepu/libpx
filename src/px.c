@@ -23,6 +23,7 @@ static bool detailed_errors = true;
 
 static void repl(px_connection *restrict connection);
 static void eval(px_connection *restrict connection, const char *restrict command_text);
+static void print_help(void);
 static void print_px_error(const px_error *restrict error);
 static void print_result(const px_result *restrict result);
 static void print_result_summary(const px_result *restrict result);
@@ -44,9 +45,10 @@ int main(int argc, char *const argv[])
     {
         static struct option options[] =
         {
-            { "username", required_argument, 0, 'u' },
-            { "host", required_argument, 0, 'h' },
-            { "database", required_argument, 0, 'd' },
+            { "username", required_argument, NULL, 'u' },
+            { "host", required_argument, NULL, 'h' },
+            { "database", required_argument, NULL, 'd' },
+            { "help", no_argument, NULL, 1 },
             { NULL, 0, 0, 0 }
         };
         
@@ -68,6 +70,10 @@ int main(int argc, char *const argv[])
                 break;
             case 'd':
                 px_connection_params_set_database(connectionParams, optarg);
+                break;
+            case 1:
+                print_help();
+                exit(0);
                 break;
             default:
                 break;
@@ -149,6 +155,20 @@ int main(int argc, char *const argv[])
     
     px_connection_close(connection);
     px_connection_delete(connection);
+}
+
+static void print_help(void)
+{
+    static const char *help_text =
+        "Usage: px [OPTION...]\n"
+        "px is a command line client for PostgreSQL.\n\n"
+        "Options\n"
+        " -u, --username=USERNAME    username to connect with\n"
+        " -h, --host=HOST            the hostname of the database to connect to\n"
+        " -d, --database=DATABASE    the name of the database to connect to\n"
+        "     --help                 shows this help\n";
+
+    printf("%s", help_text);
 }
 
 static void repl(px_connection *restrict connection)
