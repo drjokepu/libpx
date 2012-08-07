@@ -106,7 +106,7 @@ void px_connection_set_last_error(px_connection *restrict connection, px_error *
     connection->last_error = error;
 }
 
-const px_connection_status px_connection_get_status(const px_connection *restrict connection)
+px_connection_status px_connection_get_status(const px_connection *restrict connection)
 {
     return connection->connection_status;
 }

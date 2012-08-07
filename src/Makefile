@@ -1,7 +1,8 @@
 CC=clang
 AR=ar
 ARFLAGS=-rcs
-CFLAGS=-I. -Wall -g -O0
+WARNINGFLAGS=-Wall -Wunreachable-code -Wshorten-64-to-32 -Wunused-parameter -Wignored-qualifiers -Wsign-conversion
+CFLAGS=-I. $(WARNINGFLAGS) -g -O0
 #CFLAGS=-I. -Wall -O4
 LDFLAGS=
 #LDFLAGS=-O4

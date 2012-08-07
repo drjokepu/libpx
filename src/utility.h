@@ -13,6 +13,6 @@
 
 char *px_copy_string(const char *restrict str);
 const char *px_null_coalesce(const char *restrict str) __attribute__((const));
-const size_t px_utf8_strlen(const char *str) __attribute__((const));
+size_t px_utf8_strlen(const char *str) __attribute__((const));
 
 #endif

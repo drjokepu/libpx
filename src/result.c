@@ -138,8 +138,8 @@ void px_result_add_data_row(px_result *result, const size_t cell_count, const px
                 if (rowData != NULL)
                 {
                     // copy the data to the data block of the row
-                    memcpy(rowData + rowDataOffset, cells[i].data, cells[i].length);
-                    newRow->cells[i].data = rowData + rowDataOffset;
+                    memcpy((char*)rowData + rowDataOffset, cells[i].data, cells[i].length);
+                    newRow->cells[i].data = (char*)rowData + rowDataOffset;
                     rowDataOffset += (unsigned int)cells[i].length;
                 }
             }
@@ -149,14 +149,14 @@ void px_result_add_data_row(px_result *result, const size_t cell_count, const px
     }
 }
 
-const unsigned int px_result_get_column_count(const px_result *restrict result)
+unsigned int px_result_get_column_count(const px_result *restrict result)
 {
-    return result->headers.count;
+    return (unsigned int)result->headers.count;
 }
 
-const unsigned int px_result_get_row_count(const px_result *restrict result)
+unsigned int px_result_get_row_count(const px_result *restrict result)
 {
-    return result->rows.count;
+    return (unsigned int)result->rows.count;
 }
 
 const char *px_result_get_column_name(const px_result *restrict result, const unsigned int index)
@@ -169,7 +169,7 @@ bool px_result_is_db_null(const px_result *restrict result, const unsigned int c
     return result->rows.values[row].cells[column].length < 0;
 }
 
-const unsigned int px_result_get_column_datatype(const px_result *restrict result, const unsigned int index)
+unsigned int px_result_get_column_datatype(const px_result *restrict result, const unsigned int index)
 {
     return result->headers.values[index].datatype_oid;
 }
@@ -326,17 +326,17 @@ const char* px_result_get_command_tag(const px_result *restrict result)
     return result->command_tag;
 }
 
-const px_command_type px_result_get_command_type(const px_result *restrict result)
+px_command_type px_result_get_command_type(const px_result *restrict result)
 {
     return result->command_type;
 }
 
-const unsigned int px_result_get_affected_rows(const px_result *restrict result)
+unsigned int px_result_get_affected_rows(const px_result *restrict result)
 {
     return result->affected_rows;
 }
 
-const unsigned int px_result_get_row_oid(const px_result *restrict result)
+unsigned int px_result_get_row_oid(const px_result *restrict result)
 {
     return result->row_oid;
 }

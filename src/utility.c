@@ -32,7 +32,10 @@ const char *px_null_coalesce(const char *restrict str)
 
 #define ONEMASK ((size_t)(-1) / 0xFF)
 
-const size_t px_utf8_strlen(const char *str)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wcast-align"
+
+size_t px_utf8_strlen(const char *str)
 {
 	const char *s;
 	size_t count = 0;
@@ -41,7 +44,7 @@ const size_t px_utf8_strlen(const char *str)
     
 	/* Handle any initial misaligned bytes. */
 	for (s = str; (uintptr_t)(s) & (sizeof(size_t) - 1); s++) {
-		b = *s;
+		b = (unsigned char)*s;
         
 		/* Exit if we hit a zero byte. */
 		if (b == '\0')
@@ -70,7 +73,7 @@ const size_t px_utf8_strlen(const char *str)
     
 	/* Take care of any left-over bytes. */
 	for (; ; s++) {
-		b = *s;
+		b = (unsigned char)*s;
         
 		/* Exit if we hit a zero byte. */
 		if (b == '\0')
@@ -81,5 +84,7 @@ const size_t px_utf8_strlen(const char *str)
 	}
     
 done:
-	return ((s - str) - count);
+	return ((size_t)(s - str) - count);
 }
+
+#pragma clang diagnostic pop

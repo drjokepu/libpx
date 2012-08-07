@@ -74,7 +74,7 @@ void px_parameter_bind(px_parameter *restrict parameter, const char *restrict te
     else
     {
         parameter->value = px_copy_string(text_value);
-        parameter->length = strlen(parameter->value);
+        parameter->length = (int)strlen(parameter->value);
     }
     parameter->type = datatype;
 }

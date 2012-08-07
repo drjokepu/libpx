@@ -9,8 +9,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <CommonCrypto/CommonDigest.h>
+#include "security.h"
 
 void px_security_md5_to_buffer(const void *data, size_t length, unsigned char *buffer)
 {
-    CC_MD5(data, length, buffer);
+    CC_MD5(data, (unsigned int)length, buffer);
 }

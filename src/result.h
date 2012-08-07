@@ -58,17 +58,17 @@ void px_result_add_data_row(px_result *result, const size_t cell_count, const px
 void px_result_parse_command_tag(px_result *restrict result, const char *restrict command_tag);
 
 // headers
-const unsigned int px_result_get_column_count(const px_result *restrict result) __attribute__((pure));
-const unsigned int px_result_get_row_count(const px_result *restrict result) __attribute__((pure));
+unsigned int px_result_get_column_count(const px_result *restrict result) __attribute__((pure));
+unsigned int px_result_get_row_count(const px_result *restrict result) __attribute__((pure));
 const char *px_result_get_column_name(const px_result *restrict result, const unsigned int index) __attribute__((pure));
-const unsigned int px_result_get_column_datatype(const px_result *restrict result, const unsigned int index) __attribute__((pure));
+unsigned int px_result_get_column_datatype(const px_result *restrict result, const unsigned int index) __attribute__((pure));
 char *px_result_copy_column_datatype_as_string(const px_result *restrict result, const unsigned int index);
 
 // values
 const char* px_result_get_command_tag(const px_result *restrict result) __attribute__((pure));
-const px_command_type px_result_get_command_type(const px_result *restrict result) __attribute__((pure));
-const unsigned int px_result_get_affected_rows(const px_result *restrict result) __attribute__((pure));
-const unsigned int px_result_get_row_oid(const px_result *restrict result) __attribute__((pure));
+px_command_type px_result_get_command_type(const px_result *restrict result) __attribute__((pure));
+unsigned int px_result_get_affected_rows(const px_result *restrict result) __attribute__((pure));
+unsigned int px_result_get_row_oid(const px_result *restrict result) __attribute__((pure));
 
 bool px_result_is_db_null(const px_result *restrict result, const unsigned int column, const unsigned int row) __attribute__((pure));
 char *px_result_copy_cell_value_as_string(const px_result *restrict result, const unsigned int column, const unsigned int row);

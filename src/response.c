@@ -268,7 +268,7 @@ static bool px_response_parse_close_complete(px_response *restrict response)
 static bool px_response_parse_command_complete(px_response *restrict response)
 {
     response->message_type = px_message_type_command_complete;
-    response->response_data.command_complete.command_tag = (char*)(response->message_bytes + 4);
+    response->response_data.command_complete.command_tag = ((char*)response->message_bytes + 4);
     
     return true;
 }
@@ -291,7 +291,7 @@ static bool px_response_parse_error(px_response *restrict response)
 {
     response->message_type = px_message_type_error;
     
-    char *cursor = response->message_bytes + 4;
+    char *cursor = (char*)response->message_bytes + 4;
     while (*cursor != 0)
     {
         char field_type = *cursor;

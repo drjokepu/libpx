@@ -90,7 +90,7 @@ void px_connection_close(px_connection *restrict connection);
 px_connection_attempt_result px_connection_authenticate(px_connection *restrict connection);
 
 // getting information about a connection
-const px_connection_status px_connection_get_status(const px_connection *restrict connection) __attribute__((pure));
+px_connection_status px_connection_get_status(const px_connection *restrict connection) __attribute__((pure));
 px_connection_params *px_connection_get_connection_params(const px_connection *restrict connection) __attribute__((pure));
 const px_error *px_connection_get_last_error(const px_connection *restrict connection) __attribute__((pure));
 

@@ -99,7 +99,7 @@ void px_connection_close(px_connection *restrict connection);
 px_connection_attempt_result px_connection_authenticate(px_connection *restrict connection);
 
 // getting information about a connection
-const px_connection_status px_connection_get_status(const px_connection *restrict connection) __attribute__((pure));
+px_connection_status px_connection_get_status(const px_connection *restrict connection) __attribute__((pure));
 px_connection_params *px_connection_get_connection_params(const px_connection *restrict connection) __attribute__((pure));
 const px_error *px_connection_get_last_error(const px_connection *restrict connection) __attribute__((pure));
 
@@ -144,23 +144,23 @@ px_result_list *px_query_execute(const px_query *restrict query);
 void px_result_delete(px_result *result);
 void px_result_list_delete(px_result_list *result_list, bool keepElements);
 
-const unsigned int px_result_get_column_count(const px_result *restrict result) __attribute__((pure));
-const unsigned int px_result_get_row_count(const px_result *restrict result) __attribute__((pure));
+unsigned int px_result_get_column_count(const px_result *restrict result) __attribute__((pure));
+unsigned int px_result_get_row_count(const px_result *restrict result) __attribute__((pure));
 
 const char* px_result_get_command_tag(const px_result *restrict result) __attribute__((pure));
-const px_command_type px_result_get_command_type(const px_result *restrict result) __attribute__((pure));
-const unsigned int px_result_get_affected_rows(const px_result *restrict result) __attribute__((pure));
-const unsigned int px_result_get_row_oid(const px_result *restrict result) __attribute__((pure));
+px_command_type px_result_get_command_type(const px_result *restrict result) __attribute__((pure));
+unsigned int px_result_get_affected_rows(const px_result *restrict result) __attribute__((pure));
+unsigned int px_result_get_row_oid(const px_result *restrict result) __attribute__((pure));
 
 bool px_result_is_db_null(const px_result *restrict result, const unsigned int column, const unsigned int row) __attribute__((pure));
 
 const char *px_result_get_column_name(const px_result *restrict result, const unsigned int index) __attribute__((pure));
-const unsigned int px_result_get_column_datatype(const px_result *restrict result, const unsigned int index) __attribute__((pure));
+unsigned int px_result_get_column_datatype(const px_result *restrict result, const unsigned int index) __attribute__((pure));
 char *px_result_copy_column_datatype_as_string(const px_result *restrict result, const unsigned int index);
 
 char *px_result_copy_cell_value_as_string(const px_result *restrict result, const unsigned int column, const unsigned int row);
 
 // utility functions
-const size_t px_utf8_strlen(const char *str) __attribute__((const));
+size_t px_utf8_strlen(const char *str) __attribute__((const));
 
 #endif

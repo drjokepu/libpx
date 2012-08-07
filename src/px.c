@@ -74,7 +74,6 @@ int main(int argc, char *const argv[])
             case 1:
                 print_help();
                 exit(0);
-                break;
             default:
                 break;
         }
@@ -87,7 +86,6 @@ int main(int argc, char *const argv[])
         if (pwd == NULL)
         {
             err(2, NULL);
-            return 2;
         }
         px_connection_params_set_username(connectionParams, pwd->pw_name);
     }
@@ -122,15 +120,14 @@ int main(int argc, char *const argv[])
         switch (connectionAttemptResult)
         {
             case px_connection_attempt_result_invalid_host:
-                errx(1, "Cannot connect to host");
                 px_connection_delete(connection);
-                return 1;
+                errx(1, "Cannot connect to host");
+                /* return 1; */
             case px_connection_attempt_result_authentication_failed:
-                errx(2, "Authentication failed");
                 px_connection_close(connection);
                 px_connection_delete(connection);
-                return 2;
-                
+                errx(2, "Authentication failed");
+                /* return 2; */
             default:
             {
                 fprintf(stderr, "Error code: %i\n", connectionAttemptResult);
@@ -140,7 +137,6 @@ int main(int argc, char *const argv[])
                 if (pxError == NULL)
                 {
                     err(1, NULL);
-                    return 1;
                 }
                 else
                 {
@@ -180,13 +176,13 @@ static void repl(px_connection *restrict connection)
     {
         sprintf(prompt, "%s# ", px_connection_params_get_database(px_connection_get_connection_params(connection)));
         const char *originalLine = readline(prompt);        
-        const unsigned int length = strlen(originalLine);
+        const size_t length = strlen(originalLine);
         char *line = malloc(length + 1);
         memcpy(line, originalLine, length + 1);
         
         if (length > 0)
         {
-            for (unsigned int i = length - 1; line > 0 && line[i] == '\n'; i--)
+            for (size_t i = length - 1; i > 0 && line[i] == '\n'; i--)
             {
                 line[i] = 0;
             }
@@ -243,7 +239,6 @@ static void eval(px_connection *restrict connection,const char *restrict command
         if (pxError == NULL)
         {
             err(1, NULL);
-            return;
         }
         else
         {
@@ -304,7 +299,7 @@ static void print_result(const px_result *restrict result)
     for (unsigned int i = 0; i < column_count; i++)
     {
         const char *headerName = px_result_get_column_name(result, i);
-        const unsigned int headerLength = px_utf8_strlen(headerName);
+        const size_t headerLength = px_utf8_strlen(headerName);
         const unsigned int columnLength = column_lengths[i];
         
         printf("│ ");
@@ -325,7 +320,7 @@ static void print_result(const px_result *restrict result)
     for (unsigned int i = 0; i < column_count; i++)
     {
         char *data_type = px_result_copy_column_datatype_as_string(result, i);
-        const unsigned int data_type_length = px_utf8_strlen(data_type);
+        const size_t data_type_length = px_utf8_strlen(data_type);
         free(data_type);
         const unsigned int column_length = column_lengths[i];
         
@@ -367,7 +362,7 @@ static void print_result(const px_result *restrict result)
         for (unsigned int j = 0; j < column_count; j++)
         {
             char *cell_value = px_result_copy_cell_value_as_string(result, j, i);
-            const unsigned int cellLength = px_utf8_strlen(cell_value);
+            const size_t cellLength = px_utf8_strlen(cell_value);
             const unsigned int columnLength = column_lengths[j];
             printf("│ ");
             printf("%s ", cell_value);
@@ -460,23 +455,23 @@ static void print_result_summary(const px_result *restrict result)
 
 static unsigned int max_characters_in_column(const px_result *restrict result, const unsigned int column_number)
 {
-    unsigned int max = px_utf8_strlen(px_result_get_column_name(result, column_number));
+    size_t max = px_utf8_strlen(px_result_get_column_name(result, column_number));
     unsigned int row_count = px_result_get_row_count(result);
     
     char *data_type = px_result_copy_column_datatype_as_string(result, column_number);
-    const unsigned int dataTypeLength = px_utf8_strlen(data_type);
+    const size_t dataTypeLength = px_utf8_strlen(data_type);
     free(data_type);
     if (dataTypeLength > max) max = dataTypeLength;
     
     for (unsigned int i = 0; i < row_count; i++)
     {
         char *cell_value = px_result_copy_cell_value_as_string(result, column_number, i);
-        const unsigned int cell_length = px_utf8_strlen(cell_value);
+        const size_t cell_length = px_utf8_strlen(cell_value);
         free(cell_value);
         if (cell_length > max) max = cell_length;
     }
     
-    return max;
+    return (unsigned int)max;
 }
 
 static void print_px_error(const px_error *restrict error)
@@ -538,11 +533,16 @@ static void print_px_error(const px_error *restrict error)
     }
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
+
 static bool password_prompt(const px_connection *connection, void *context)
 {
     px_connection_params_set_password(px_connection_get_connection_params(connection), getpass("Password: "));
     return true;
 }
+
+#pragma clang diagnostic pop
 
 static void list_tables(px_connection *restrict connection)
 {
