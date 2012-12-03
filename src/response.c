@@ -18,8 +18,6 @@
 #include "connection.h"
 #include "error.h"
 
-// #define DEBUG_RESPONSE 1
-
 static void px_response_delete_contents(px_response *response);
 static void px_response_delete_without_contents(px_response *response);
 
@@ -469,8 +467,11 @@ static char* px_message_type_string(px_message_type type)
             return "ready for query";
         case px_message_type_row_description:
             return "row description";
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunreachable-code"
         default:
             return "unknown";
+#pragma clang diagnostic pop
     }
 }
 #endif /* DEBUG_RESPONSE */
