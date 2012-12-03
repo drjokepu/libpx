@@ -244,6 +244,7 @@ static void px_message_build_message_data(const char *restrict pattern, void** p
                     }
                 }
                 default:
+                    fprintf(stderr, "Unhandled px_message pattern: %c\n", pattern[i]);
                     break;
             }
         }
