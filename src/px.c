@@ -32,6 +32,7 @@ static unsigned int max_characters_in_column(const px_result *restrict result, c
 
 static bool password_prompt(const px_connection *connection, void *context);
 
+static void list_schemas(px_connection *restrict connection);
 static void list_tables(px_connection *restrict connection);
 static void describe_table(px_connection *restrict connection, const char *restrict table_name);
 static bool describe_table_columns(px_connection *restrict connection, const char *restrict table_name);
@@ -194,6 +195,10 @@ static void repl(px_connection *restrict connection)
             else if (strcmp(line, "\\error") == 0)
             {
                 print_px_error(px_connection_get_last_error(connection));
+            }
+            else if (strcmp(line, "\\dn") == 0)
+            {
+                list_schemas(connection);
             }
             else if (strcmp(line, "\\dt") == 0)
             {
@@ -543,6 +548,18 @@ static bool password_prompt(const px_connection *connection, void *context)
 }
 
 #pragma clang diagnostic pop
+
+static void list_schemas(px_connection *restrict connection)
+{
+    static const char *command_text =
+    "SELECT n.nspname AS \"Name\", "
+    "pg_catalog.pg_get_userbyid(n.nspowner) AS \"Owner\" "
+    "FROM pg_catalog.pg_namespace n "
+    "WHERE n.nspname !~ '^pg_' AND n.nspname <> 'information_schema' "
+    "ORDER BY 1;";
+    
+    eval(connection, command_text);
+}
 
 static void list_tables(px_connection *restrict connection)
 {
