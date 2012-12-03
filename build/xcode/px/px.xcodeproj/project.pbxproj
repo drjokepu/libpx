@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02642D2E166CD1EA002F8866 /* libedit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02642D2D166CD1EA002F8866 /* libedit.dylib */; };
 		02F2027715D16F4D00D2B842 /* connection_params.c in Sources */ = {isa = PBXBuildFile; fileRef = 02F2025C15D16F4D00D2B842 /* connection_params.c */; };
 		02F2027815D16F4D00D2B842 /* connection.c in Sources */ = {isa = PBXBuildFile; fileRef = 02F2025E15D16F4D00D2B842 /* connection.c */; };
 		02F2027915D16F4D00D2B842 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = 02F2026115D16F4D00D2B842 /* error.c */; };
@@ -34,7 +35,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		02F2024F15D16F1300D2B842 /* px */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = px; path = /Users/tamas/Code/pg/libpx/build/xcode/px/build/Release/px; sourceTree = "<absolute>"; };
+		02642D2B166CD19A002F8866 /* px */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = px; sourceTree = BUILT_PRODUCTS_DIR; };
+		02642D2D166CD1EA002F8866 /* libedit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libedit.dylib; path = usr/lib/libedit.dylib; sourceTree = SDKROOT; };
 		02F2025C15D16F4D00D2B842 /* connection_params.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = connection_params.c; path = ../../../src/connection_params.c; sourceTree = "<group>"; };
 		02F2025D15D16F4D00D2B842 /* connection_params.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = connection_params.h; path = ../../../src/connection_params.h; sourceTree = "<group>"; };
 		02F2025E15D16F4D00D2B842 /* connection.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = connection.c; path = ../../../src/connection.c; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02642D2E166CD1EA002F8866 /* libedit.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +80,7 @@
 		02F2024415D16F1300D2B842 = {
 			isa = PBXGroup;
 			children = (
+				02642D2D166CD1EA002F8866 /* libedit.dylib */,
 				02F2025C15D16F4D00D2B842 /* connection_params.c */,
 				02F2025D15D16F4D00D2B842 /* connection_params.h */,
 				02F2025E15D16F4D00D2B842 /* connection.c */,
@@ -103,6 +107,7 @@
 				02F2027415D16F4D00D2B842 /* typedef.h */,
 				02F2027515D16F4D00D2B842 /* utility.c */,
 				02F2027615D16F4D00D2B842 /* utility.h */,
+				02642D2B166CD19A002F8866 /* px */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,7 +128,7 @@
 			);
 			name = px;
 			productName = px;
-			productReference = 02F2024F15D16F1300D2B842 /* px */;
+			productReference = 02642D2B166CD19A002F8866 /* px */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -255,6 +260,7 @@
 				02F2025B15D16F1300D2B842 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
