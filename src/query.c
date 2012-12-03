@@ -78,6 +78,9 @@ static bool px_query_can_use_simple_query(const px_query *restrict query)
 
 px_result_list *px_query_execute(const px_query *restrict query)
 {
+#ifdef DEBUG_QUERY
+    printf("query: %s\n", query->command_text);
+#endif
     if (px_query_can_use_simple_query(query))
     {
         return px_query_execute_sync_simple(query);
